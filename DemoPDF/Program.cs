@@ -1,3 +1,6 @@
+using PuppeteerReportCsharp;
+using PuppeteerSharp;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -26,6 +29,36 @@ app.MapPost("/reporte", () =>
     var result = Convert.ToBase64String(data);
     doc.Close();
     //{status = "ok", data = "result"};
+    return result;
+});
+
+app.MapPost("/reporte-puppeteer", async () =>
+{
+    //Logica que obtenga los datos de la BD
+    //Convertir información a HTML
+    var htmlCode = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "Template\\invoice1.html");
+
+    //await new BrowserFetcher().DownloadAsync();
+    var browser = await Puppeteer.LaunchAsync(new LaunchOptions { ExecutablePath=""});
+    var page = await browser.NewPageAsync();
+    await page.SetContentAsync(htmlCode);
+
+    var puppeteer = new PuppeteerReport();
+    byte[] data = await puppeteer.PDFPage(page, new PuppeteerSharp.PdfOptions
+    {
+        Format = PuppeteerSharp.Media.PaperFormat.A4,
+        PreferCSSPageSize = true,
+        MarginOptions = new PuppeteerSharp.Media.MarginOptions
+        {
+            Top = "10mm",
+            Left = "10mm",
+            Right = "10mm",
+            Bottom = "10mm"
+        }
+    });
+    
+    var result = Convert.ToBase64String(data);    
+
     return result;
 });
 
