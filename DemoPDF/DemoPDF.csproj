@@ -19,6 +19,13 @@
   <ItemGroup>
     <PackageReference Include="puppeteer-report" Version="3.0.3" />
     <PackageReference Include="Select.HtmlToPdf.NetCore" Version="22.1.0" />
+    <PackageReference Include="Wkhtmltopdf.NetCore" Version="5.0.2-preview" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Rotativa\Windows\wkhtmltopdf.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

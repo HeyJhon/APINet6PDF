@@ -1,10 +1,13 @@
 using PuppeteerReportCsharp;
 using PuppeteerSharp;
+using Wkhtmltopdf.NetCore;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddWkhtmltopdf();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -59,6 +62,15 @@ app.MapPost("/reporte-puppeteer", async () =>
     
     var result = Convert.ToBase64String(data);    
 
+    return result;
+});
+
+app.MapPost("/reporte-rotativa",(IGeneratePdf generatePdf) =>
+{
+    //Logica que obtenga los datos de la BD
+    //Convertir información a HTML
+    var htmlCode = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "Template\\invoice1.html");
+    var result = generatePdf.GetPDF(htmlCode);
     return result;
 });
 

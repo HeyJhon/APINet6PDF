@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/DemoPDF/.local-chromium/Win64-884014/chrome-win
+/DemoPDF/Rotativa/Linux/wkhtmltopdf
+/DemoPDF/Rotativa/Mac/wkhtmltopdf
